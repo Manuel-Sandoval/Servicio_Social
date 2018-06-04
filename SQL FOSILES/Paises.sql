@@ -1,0 +1,1 @@
+INSERT INTO paises (id_pais, nombre) VALUES (1, 'México');
