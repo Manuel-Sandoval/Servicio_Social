@@ -1,5 +1,5 @@
 CREATE OR REPLACE TRIGGER trg_foliador_fosiles
-BEFORE INSERT ON fosiles.fosiles
+BEFORE INSERT OR UPDATE OF id_fosil ON fosiles.fosiles
 FOR EACH ROW
 
 BEGIN
