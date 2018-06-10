@@ -1,3 +1,292 @@
+DROP TABLE FOSILES; 
+DROP TABLE MUNICIPIOS; 
+DROP TABLE ESTADOS; 
+DROP TABLE PAISES;
+DROP TABLE USUARIOS; 
+DROP TABLE EPOCAS; 
+DROP TABLE PERIODOS; 
+DROP TABLE ERAS; 
+DROP TABLE EONES; 
+DROP SEQUENCE fosiles_id; 
+DROP SEQUENCE eon_id; 
+DROP SEQUENCE era_id; 
+DROP SEQUENCE periodo_id; 
+DROP SEQUENCE epoca_id; 
+DROP SEQUENCE pais_id; 
+DROP SEQUENCE estado_id;
+DROP SEQUENCE municipio_id;
+DROP SEQUENCE usuario_id; 
+/
+--ERAS GEOLOGICAS
+CREATE TABLE FOSILES.EONES (
+    ID_EON NUMBER,
+    NOMBRE VARCHAR2(50),
+    CONSTRAINT EON_PK PRIMARY KEY(ID_EON)
+);
+/
+CREATE SEQUENCE eon_id
+  MINVALUE 1
+  START WITH 1
+  INCREMENT BY 1
+  NOCACHE;
+/
+CREATE TABLE FOSILES.ERAS (
+    ID_EON NUMBER,
+    ID_ERA NUMBER,
+    NOMBRE VARCHAR2(50),
+    CONSTRAINT era_pk PRIMARY KEY(ID_ERA)
+);
+/
+CREATE SEQUENCE era_id
+  MINVALUE 1
+  START WITH 1
+  INCREMENT BY 1
+  NOCACHE;
+/
+CREATE TABLE FOSILES.PERIODOS (
+    ID_ERA NUMBER,
+    ID_PERIODO NUMBER,
+    NOMBRE VARCHAR2(50),
+    CONSTRAINT periodo_pk PRIMARY KEY(ID_PERIODO)
+);
+/
+CREATE SEQUENCE periodo_id
+  MINVALUE 1
+  START WITH 1
+  INCREMENT BY 1
+  NOCACHE;
+/
+CREATE TABLE FOSILES.EPOCAS (
+    ID_PERIODO NUMBER,
+    ID_EPOCA NUMBER,
+    NOMBRE VARCHAR2(50),
+    CONSTRAINT epoca_pk PRIMARY KEY(ID_EPOCA)
+);
+/
+CREATE SEQUENCE epoca_id
+  MINVALUE 1
+  START WITH 1
+  INCREMENT BY 1
+  NOCACHE;
+/
+--LOCALIDADES
+CREATE TABLE FOSILES.PAISES(
+    ID_PAIS NUMBER,
+    NOMBRE  VARCHAR2(100),
+    CONSTRAINT PAIS_PK PRIMARY KEY(ID_PAIS)
+);
+/
+CREATE SEQUENCE pais_id
+  MINVALUE 1
+  START WITH 1
+  INCREMENT BY 1
+  NOCACHE;
+/
+CREATE TABLE FOSILES.ESTADOS(
+    ID_ESTADO NUMBER,
+    ID_PAIS NUMBER,
+    NOMBRE VARCHAR2(300),
+    CONSTRAINT ESTADO_PK PRIMARY KEY(ID_ESTADO),
+    CONSTRAINT ESTA_PAIS_FK FOREIGN KEY (ID_PAIS) REFERENCES FOSILES.PAISES (ID_PAIS)
+);
+/
+CREATE SEQUENCE estado_id
+  MINVALUE 1
+  START WITH 1
+  INCREMENT BY 1
+  NOCACHE;
+/
+CREATE TABLE FOSILES.MUNICIPIOS (
+    ID_MUNICIPIO NUMBER,
+    ID_ESTADO NUMBER,
+    NOMBRE VARCHAR2(300),   
+    CONSTRAINT MUNICIPIO_PK PRIMARY KEY(ID_MUNICIPIO),
+    CONSTRAINT MUNI_ESTA_FK FOREIGN KEY (ID_ESTADO) REFERENCES FOSILES.ESTADOS (ID_ESTADO)
+);
+/
+CREATE SEQUENCE municipio_id
+  MINVALUE 1
+  START WITH 1
+  INCREMENT BY 1
+  NOCACHE;
+/
+--seguridad
+CREATE TABLE usuarios (
+  id_usuario NUMBER NOT NULL,
+  usuario VARCHAR2(30) NOT NULL,
+  credencial VARCHAR2(40) NOT NULL,
+  activo NUMBER NOT NULL,
+  usuario_root NUMBER,
+  CONSTRAINT usuario_pk PRIMARY KEY (id_usuario),
+  CONSTRAINT usuario_uk UNIQUE (usuario));
+/
+CREATE SEQUENCE usuario_id
+  MINVALUE 1
+  START WITH 1
+  INCREMENT BY 1
+  NOCACHE;
+/
+--CORE
+CREATE TABLE FOSILES.FOSILES (
+    ID_FOSIL NUMBER,
+    MUESTRA VARCHAR2(10),
+    GRUPO VARCHAR2(100),
+    NOMBRE VARCHAR2(100),
+    ID_PAIS NUMBER,
+    ID_ESTADO NUMBER,
+    ID_MUNICIPIO NUMBER,
+    FORMACION VARCHAR2(100),
+    ID_EON NUMBER,
+    ID_ERA NUMBER,
+    ID_PERIODO NUMBER,
+    ID_EPOCA NUMBER, 
+    COMENTARIOS VARCHAR2(500),
+    ID_ALTA NUMBER,
+    ID_MODIF NUMBER,
+    CONSTRAINT FOSIL_PK PRIMARY KEY(ID_FOSIL),
+    CONSTRAINT FOSI_PAIS_FK  FOREIGN KEY (ID_PAIS) REFERENCES FOSILES.PAISES (ID_PAIS),
+    CONSTRAINT FOSI_ESTA_FK FOREIGN KEY (ID_ESTADO) REFERENCES FOSILES.ESTADOS (ID_ESTADO),
+    CONSTRAINT FOSI_MUNI_FK FOREIGN KEY (ID_MUNICIPIO) REFERENCES FOSILES.MUNICIPIOS (ID_MUNICIPIO),
+    CONSTRAINT FOSIL_EON_FK FOREIGN KEY (ID_EON) REFERENCES FOSILES.EONES (ID_EON),
+    CONSTRAINT FOSIL_ERA_FK FOREIGN KEY (ID_ERA) REFERENCES FOSILES.ERAS (ID_ERA),
+    CONSTRAINT FOSIL_EPOC_FK FOREIGN KEY (ID_EPOCA) REFERENCES FOSILES.EPOCAS (ID_EPOCA),
+    CONSTRAINT FOSIL_PERO_FK FOREIGN KEY (ID_PERIODO) REFERENCES FOSILES.PERIODOS (ID_PERIODO),
+    CONSTRAINT FOSIL_USAL_FK FOREIGN KEY (ID_ALTA) REFERENCES FOSILES.USUARIOS (ID_USUARIO),
+    CONSTRAINT FOSIL_USMO_FK FOREIGN KEY (ID_MODIF) REFERENCES FOSILES.USUARIOS (ID_USUARIO)
+);
+/
+CREATE SEQUENCE fosiles_id
+  MINVALUE 1
+  START WITH 1
+  INCREMENT BY 1
+  NOCACHE;
+/  
+--TRIGGERS
+CREATE OR REPLACE TRIGGER trg_foliador_epocas
+BEFORE INSERT OR UPDATE OF id_epoca ON fosiles.epocas
+FOR EACH ROW
+
+BEGIN
+    
+    :NEW.id_epoca := epoca_id.nextval;
+    
+END;
+/
+CREATE OR REPLACE TRIGGER trg_foliador_eras
+BEFORE INSERT OR UPDATE OF id_era ON fosiles.eras
+FOR EACH ROW
+
+BEGIN
+    
+    :NEW.id_era := era_id.nextval;
+    
+END;
+/
+CREATE OR REPLACE TRIGGER trg_foliador_estados
+BEFORE INSERT OR UPDATE OF id_estado ON fosiles.estados
+FOR EACH ROW
+
+BEGIN
+    
+    :NEW.id_estado := estado_id.nextval;
+
+END;
+/
+CREATE OR REPLACE TRIGGER trg_foliador_fosiles
+BEFORE INSERT OR UPDATE OF id_fosil ON fosiles.fosiles
+FOR EACH ROW
+
+BEGIN
+    
+    :NEW.id_fosil := fosiles_id.nextval;
+    
+END;
+/
+CREATE OR REPLACE TRIGGER trg_foliador_municipios
+BEFORE INSERT OR UPDATE OF id_municipio ON fosiles.municipios
+FOR EACH ROW
+
+BEGIN
+    
+    :NEW.id_municipio := municipio_id.nextval;
+
+END;
+/
+CREATE OR REPLACE TRIGGER trg_foliador_paises
+BEFORE INSERT OR UPDATE OF id_pais ON fosiles.paises
+FOR EACH ROW
+
+BEGIN
+    
+    :NEW.id_pais := pais_id.nextval;
+    
+END;
+/
+CREATE OR REPLACE TRIGGER trg_foliador_periodo
+BEFORE INSERT OR UPDATE OF id_periodo ON fosiles.periodos
+FOR EACH ROW
+
+BEGIN
+    
+    :NEW.id_periodo := periodo_id.nextval;
+    
+END;
+/
+CREATE OR REPLACE TRIGGER trg_foliador_usuarios
+BEFORE INSERT OR UPDATE OF id_usuario ON fosiles.usuarios
+FOR EACH ROW
+
+BEGIN
+    
+    :NEW.id_usuario := usuario_id.nextval;
+    
+END;
+/
+CREATE OR REPLACE TRIGGER trg_foliador_eon
+BEFORE INSERT OR UPDATE OF id_eon ON fosiles.eones
+FOR EACH ROW
+
+BEGIN
+    
+    :NEW.id_eon := eon_id.nextval;
+    
+END;
+/
+INSERT INTO paises (id_pais, nombre) VALUES (1, 'México');
+/
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Aguascalientes');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Baja California');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Baja California Sur');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Campeche');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Coahuila de Zaragoza');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Colima');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Chiapas');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Chihuahua');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Ciudad de México');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Durango');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Guanajuato');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Guerrero');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Hidalgo');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Jalisco');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'México');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Michoacán de Ocampo');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Morelos');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Nayarit');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Nuevo León');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Oaxaca');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Puebla');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Querétaro');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Quintana Roo');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'San Luis Potosí');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Sinaloa');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Sonora');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Tabasco');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Tamaulipas');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Tlaxcala');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Veracruz de Ignacio de la Llave');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Yucatán');
+INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Zacatecas');
+/
 INSERT INTO fosiles.municipios (id_estado, nombre) VALUES (1, 'Aguascalientes');
 INSERT INTO fosiles.municipios (id_estado, nombre) VALUES (1, 'Asientos');
 INSERT INTO fosiles.municipios (id_estado, nombre) VALUES (1, 'Calvillo');
