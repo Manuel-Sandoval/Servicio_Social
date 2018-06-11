@@ -114,7 +114,7 @@ CREATE SEQUENCE municipio_id
 CREATE TABLE usuarios (
   id_usuario NUMBER NOT NULL,
   usuario VARCHAR2(30) NOT NULL,
-  credencial VARCHAR2(40) NOT NULL,
+  credencial VARCHAR2(70) NOT NULL,
   activo NUMBER NOT NULL,
   usuario_root NUMBER,
   CONSTRAINT usuario_pk PRIMARY KEY (id_usuario),
@@ -2744,3 +2744,5 @@ INSERT INTO fosiles.municipios (id_estado, nombre) VALUES (32, 'Villa Hidalgo');
 INSERT INTO fosiles.municipios (id_estado, nombre) VALUES (32, 'Villa de Cos');
 INSERT INTO fosiles.municipios (id_estado, nombre) VALUES (32, 'Villanueva');
 INSERT INTO fosiles.municipios (id_estado, nombre) VALUES (32, 'Zacatecas');
+/
+INSERT INTO usuarios(usuario, credencial, activo, usuario_root) VALUES('Manuel','$2a$10$VpzwzAmQR9iUIdfb8nvgfusOJ28kJZ6L0g6W9KKBtQ8w4m3C88KiS' ,1,1);

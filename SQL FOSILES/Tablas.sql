@@ -95,7 +95,7 @@ CREATE SEQUENCE municipio_id
 CREATE TABLE usuarios (
   id_usuario NUMBER NOT NULL,
   usuario VARCHAR2(30) NOT NULL,
-  credencial VARCHAR2(40) NOT NULL,
+  credencial VARCHAR2(70) NOT NULL,
   activo NUMBER NOT NULL,
   usuario_root NUMBER,
   CONSTRAINT usuario_pk PRIMARY KEY (id_usuario),
