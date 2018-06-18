@@ -30,3 +30,4 @@ INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Tlaxcala');
 INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Veracruz de Ignacio de la Llave');
 INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Yucatán');
 INSERT INTO fosiles.estados (id_estado, nombre) VALUES (1, 'Zacatecas');
+UPDATE fosiles.estados SET id_pais = 1;

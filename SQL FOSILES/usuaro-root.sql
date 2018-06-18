@@ -1,0 +1,1 @@
+INSERT INTO usuarios(usuario, credencial, activo, usuario_root) VALUES('Manuel','$2a$10$VpzwzAmQR9iUIdfb8nvgfusOJ28kJZ6L0g6W9KKBtQ8w4m3C88KiS' ,1,1);
