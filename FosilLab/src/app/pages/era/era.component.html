@@ -1,0 +1,31 @@
+<div class="grid-container">
+  <h1 class="mat-h1">{{update ? 'Actualizar Era': 'Crear Era'}}</h1>
+  <div class="mat-elevation-z8">
+
+    <mat-card>
+
+      <form ngNativeValidate #f="ngForm" id="eraForm" (submit)="submitEra(f)">
+
+        <mat-form-field class="full-width">
+          <mat-select [(value)]="era.ID_EON" placeholder="Seleccione un eón">
+            <mat-option *ngFor="let eon of eones" [value]="eon.ID_EON">{{eon.NOMBRE}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input type="text" matInput [(ngModel)]="era.NOMBRE_ERA" name="era" required placeholder="Nombre de era">
+        </mat-form-field>
+
+        <button mat-raised-button color="warn" type="button" [routerLink]="['/eras']">
+          Atras
+        </button>
+
+        <button mat-raised-button class="margin-left-20" color="primary" type="submit">
+          {{update ? 'Actualizar Era': 'Crear Era'}}
+        </button>
+
+      </form>
+
+    </mat-card>
+  </div>
+</div>

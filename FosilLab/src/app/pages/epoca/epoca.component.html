@@ -1,0 +1,31 @@
+<div class="grid-container">
+  <h1 class="mat-h1">{{update ? 'Actualizar Epoca': 'Crear Epoca'}}</h1>
+  <div class="mat-elevation-z8">
+
+    <mat-card>
+
+      <form ngNativeValidate #f="ngForm" id="epocaForm" (submit)="submitEpoca(f)">
+
+        <mat-form-field class="full-width">
+          <mat-select [(value)]="epoca.ID_PERIODO" placeholder="Seleccione un periodo">
+            <mat-option *ngFor="let periodo of periodos" [value]="periodo.ID_PERIODO">{{periodo.NOMBRE_PERIODO}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input type="text" matInput [(ngModel)]="epoca.NOMBRE_EPOCA" name="era" required placeholder="Nombre de epoca">
+        </mat-form-field>
+
+        <button mat-raised-button color="warn" type="button" [routerLink]="['/epocas']">
+          Atras
+        </button>
+
+        <button mat-raised-button class="margin-left-20" color="primary" type="submit">
+          {{update ? 'Actualizar Epoca': 'Crear Epoca'}}
+        </button>
+
+      </form>
+
+    </mat-card>
+  </div>
+</div>

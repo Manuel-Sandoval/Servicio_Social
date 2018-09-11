@@ -1,0 +1,19 @@
+<mat-toolbar color="primary">
+  <span>Iniciar Sesion</span>
+</mat-toolbar>
+
+<div align="center" class="margin-top-50">
+  <mat-card class="width-50">
+    <form ngNativeValidate #f="ngForm" id="loginform" (submit)="ingresar(f)">
+      <mat-form-field class="full-width">
+        <input type="text" matInput ngModel name="usuario" required placeholder="Usuario">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <input type="password" matInput ngModel name="credencial" required placeholder="Contraseña">
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit">Iniciar Sesion</button>
+    </form>
+  </mat-card>
+</div>

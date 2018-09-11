@@ -1,0 +1,78 @@
+<div class="grid-container">
+  <h1 class="mat-h1">Fosiles</h1>
+  <div class="mat-elevation-z8">
+
+    <div class="filter">
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar Fosiles...">
+      </mat-form-field>
+    </div>
+
+    <mat-table #table [dataSource]="fosiles" matSort aria-label="Fosiles">
+
+      <ng-container matColumnDef="MUESTRA">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Muestra</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.MUESTRA}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="GRUPO">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Grupo</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.GRUPO}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="NOMBRE">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.NOMBRE}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="FORMACION">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Formacion</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.FORMACION}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="NOMBRE_MUNICIPIO">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Municipio</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.NOMBRE_MUNICIPIO}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="NOMBRE_EPOCA">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Epoca</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.NOMBRE_EPOCA}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="COMENTARIOS">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Comentario</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.COMENTARIOS}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <a mat-icon-button color="primary" [routerLink]="['/fosil', row.ID_FOSIL]">
+            <mat-icon>mode_edit</mat-icon>
+          </a>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+    </mat-table>
+
+    <mat-paginator #paginator
+                   [length]="fosiles?.data.length"
+                   [pageIndex]="0"
+                   [pageSize]="10"
+                   [pageSizeOptions]="[10, 20, 50, 100]">
+    </mat-paginator>
+  </div>
+</div>
+
+<div class="button-row">
+  <button mat-fab class="bg-green" (click)="generateExcel()">
+    <mat-icon>description</mat-icon>
+  </button>
+  <button mat-fab color="primary" class="margin-left-20" [routerLink]="['/fosil', 'new']">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

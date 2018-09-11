@@ -1,0 +1,25 @@
+<div class="grid-container">
+  <h1 class="mat-h1">{{update ? 'Actualizar Pais': 'Crear Pais'}}</h1>
+  <div class="mat-elevation-z8">
+
+    <mat-card>
+
+      <form ngNativeValidate #f="ngForm" id="eonForm" (submit)="submitPais(f)">
+
+        <mat-form-field class="full-width">
+          <input type="text" matInput [(ngModel)]="pais.NOMBRE" name="pais" required placeholder="Nombre de país">
+        </mat-form-field>
+
+        <button mat-raised-button color="warn" type="button" [routerLink]="['/paises']">
+          Atras
+        </button>
+
+        <button mat-raised-button class="margin-left-20" color="primary" type="submit">
+          {{update ? 'Actualizar Pais': 'Crear Pais'}}
+        </button>
+
+      </form>
+
+    </mat-card>
+  </div>
+</div>

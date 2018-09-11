@@ -1,0 +1,52 @@
+<div class="grid-container">
+  <h1 class="mat-h1">Municipios</h1>
+  <div class="mat-elevation-z8">
+
+    <div class="filter">
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar Municipios...">
+      </mat-form-field>
+    </div>
+
+    <mat-table #table [dataSource]="municipios" matSort aria-label="Municipios">
+
+      <ng-container matColumnDef="NOMBRE_ESTADO">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre Estado</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.NOMBRE_ESTADO}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="NOMBRE_MUNICIPIO">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre Municipio</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.NOMBRE_MUNICIPIO}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let row">
+
+          <a mat-icon-button color="primary" [routerLink]="['/municipio', row.ID_MUNICIPIO]">
+            <mat-icon>mode_edit</mat-icon>
+          </a>
+
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+    </mat-table>
+
+    <mat-paginator #paginator
+                   [length]="municipios?.data.length"
+                   [pageIndex]="0"
+                   [pageSize]="10"
+                   [pageSizeOptions]="[10, 20, 50, 100]">
+    </mat-paginator>
+  </div>
+</div>
+
+<div class="button-row">
+  <button mat-fab color="primary" class="margin-left-20" [routerLink]="['/municipio', 'new']">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

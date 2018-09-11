@@ -1,0 +1,25 @@
+<div class="grid-container">
+  <h1 class="mat-h1">{{update ? 'Actualizar Eon': 'Crear Eon'}}</h1>
+  <div class="mat-elevation-z8">
+
+    <mat-card>
+
+      <form ngNativeValidate #f="ngForm" id="eonForm" (submit)="submitEon(f)">
+
+        <mat-form-field class="full-width">
+          <input type="text" matInput [(ngModel)]="eon.NOMBRE" name="eon" required placeholder="Nombre de eón">
+        </mat-form-field>
+
+        <button mat-raised-button color="warn" type="button" [routerLink]="['/eones']">
+          Atras
+        </button>
+
+        <button mat-raised-button class="margin-left-20" color="primary" type="submit">
+          {{update ? 'Actualizar Eon': 'Crear Eon'}}
+        </button>
+
+      </form>
+
+    </mat-card>
+  </div>
+</div>

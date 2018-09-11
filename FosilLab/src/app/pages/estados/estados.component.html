@@ -1,0 +1,53 @@
+<div class="grid-container">
+  <h1 class="mat-h1">Estados</h1>
+  <div class="mat-elevation-z8">
+
+    <div class="filter">
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar Estados...">
+      </mat-form-field>
+    </div>
+
+    <mat-table #table [dataSource]="estados" matSort aria-label="Estados">
+
+      <ng-container matColumnDef="NOMBRE_PAIS">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre Pais</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.NOMBRE_PAIS}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="NOMBRE_ESTADO">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre Estado</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.NOMBRE_ESTADO}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let row">
+
+          <a mat-icon-button color="primary" [routerLink]="['/estados', row.ID_ESTADO]">
+            <mat-icon>mode_edit</mat-icon>
+          </a>
+
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+    </mat-table>
+
+    <mat-paginator #paginator
+                   [length]="estados?.data.length"
+                   [pageIndex]="0"
+                   [pageSize]="10"
+                   [pageSizeOptions]="[10, 20, 50, 100]">
+    </mat-paginator>
+  </div>
+</div>
+
+
+<div class="button-row">
+  <button mat-fab color="primary" class="margin-left-20" [routerLink]="['/estados', 'new']">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

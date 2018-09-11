@@ -1,0 +1,53 @@
+<div class="grid-container">
+  <h1 class="mat-h1">{{update ? 'Actualizar Usuario': 'Crear Usuario'}}</h1>
+  <div class="mat-elevation-z8">
+
+    <mat-card>
+
+      <form ngNativeValidate #f="ngForm" id="userForm" (submit)="submitUser(f)">
+
+        <mat-form-field class="full-width">
+          <input type="text" matInput [(ngModel)]="usuario.USUARIO" name="usuario" required placeholder="Usuario">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input type="password" matInput [(ngModel)]="usuario.CREDENCIAL" name="credencial" [required]="!update"
+                 placeholder="Contraseña">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-select placeholder="Activo" [(ngModel)]="usuario.ACTIVO" name="activo">
+            <mat-option [value]="0">
+              Inactivo
+            </mat-option>
+            <mat-option [value]="1">
+              Activo
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field class="full-width">
+          <mat-select placeholder="Tipo de Usuario" [(ngModel)]="usuario.USUARIO_ROOT" name="usuario_root">
+            <mat-option [value]="0">
+              Usuario Normal
+            </mat-option>
+            <mat-option [value]="1">
+              Administrador
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-raised-button color="warn" [routerLink]="['/usuarios']">
+          Atras
+        </button>
+
+        <button mat-raised-button class="margin-left-20" color="primary" type="submit">
+          {{update ? 'Actualizar Usuario': 'Crear Usuario'}}
+        </button>
+
+      </form>
+
+    </mat-card>
+  </div>
+</div>

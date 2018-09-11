@@ -1,0 +1,83 @@
+<div class="grid-container">
+  <h1 class="mat-h1">{{update ? 'Actualizar Fosil': 'Crear Fosil'}}</h1>
+  <div class="mat-elevation-z8">
+
+    <mat-card>
+
+      <form ngNativeValidate #f="ngForm" id="fosilForm" (submit)="submitFosil(f)">
+
+        <mat-form-field class="full-width">
+          <input type="text" matInput [(ngModel)]="fosil.MUESTRA" name="muestra" required placeholder="Muestra">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input type="text" matInput [(ngModel)]="fosil.GRUPO" name="grupo" required placeholder="Grupo">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input type="text" matInput [(ngModel)]="fosil.NOMBRE" name="nombre" required placeholder="Nombre">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-select [(value)]="fosil.ID_PAIS" placeholder="Seleccione un país" (valueChange)="getEstados(fosil.ID_PAIS)">
+            <mat-option *ngFor="let pais of paises" [value]="pais.ID_PAIS">{{pais.NOMBRE}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-select [(value)]="fosil.ID_ESTADO" placeholder="Seleccione un estado" (valueChange)="getMunicipios(fosil.ID_ESTADO)">
+            <mat-option *ngFor="let estado of estados" [value]="estado.ID_ESTADO">{{estado.NOMBRE_ESTADO}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-select [(value)]="fosil.ID_MUNICIPIO" placeholder="Seleccione un municipio">
+            <mat-option *ngFor="let municipio of municipios" [value]="municipio.ID_MUNICIPIO">{{municipio.NOMBRE_MUNICIPIO}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-select [(value)]="fosil.ID_EON" placeholder="Seleccione un eón" (valueChange)="getEras(fosil.ID_EON)">
+            <mat-option *ngFor="let eon of eones" [value]="eon.ID_EON">{{eon.NOMBRE}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-select [(value)]="fosil.ID_ERA" placeholder="Seleccione una era" (valueChange)="getPeriodos(fosil.ID_ERA)">
+            <mat-option *ngFor="let era of eras" [value]="era.ID_ERA">{{era.NOMBRE_ERA}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-select [(value)]="fosil.ID_PERIODO" placeholder="Seleccione un periodo" (valueChange)="getEpocas(fosil.ID_PERIODO)">
+            <mat-option *ngFor="let periodo of periodos" [value]="periodo.ID_PERIODO">{{periodo.NOMBRE_PERIODO}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-select [(value)]="fosil.ID_EPOCA" placeholder="Seleccione un epoca">
+            <mat-option *ngFor="let epoca of epocas" [value]="epoca.ID_EPOCA">{{epoca.NOMBRE_EPOCA}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input type="text" matInput [(ngModel)]="fosil.FORMACION" name="formacion" required placeholder="Formación">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input type="text" matInput [(ngModel)]="fosil.COMENTARIOS" name="comentarios" placeholder="Comentarios">
+        </mat-form-field>
+
+        <button mat-raised-button color="warn" type="button" [routerLink]="['/dashboard']">
+          Atras
+        </button>
+
+        <button mat-raised-button class="margin-left-20" color="primary" type="submit">
+          {{update ? 'Actualizar Fosil': 'Crear Fosil'}}
+        </button>
+
+      </form>
+
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="grid-container">
+  <h1 class="mat-h1">{{update ? 'Actualizar Municipio': 'Crear Municipio'}}</h1>
+  <div class="mat-elevation-z8">
+
+    <mat-card>
+
+      <form ngNativeValidate #f="ngForm" id="municipioForm" (submit)="submitMunicipio(f)">
+
+        <mat-form-field class="full-width">
+          <mat-select [(value)]="municipio.ID_ESTADO" placeholder="Seleccione un Estado">
+            <mat-option *ngFor="let estado of estados" [value]="estado.ID_ESTADO">{{estado.NOMBRE_ESTADO}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input type="text" matInput [(ngModel)]="municipio.NOMBRE_MUNICIPIO" name="municipio" required placeholder="Nombre de municipio">
+        </mat-form-field>
+
+        <button mat-raised-button color="warn" type="button" [routerLink]="['/municipios']">
+          Atras
+        </button>
+
+        <button mat-raised-button class="margin-left-20" color="primary" type="submit">
+          {{update ? 'Actualizar Municipio': 'Crear Municipio'}}
+        </button>
+
+      </form>
+
+    </mat-card>
+  </div>
+</div>
